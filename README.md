@@ -1,3 +1,3 @@
 # Desafio ELFEM
 
-### Com Java e Spring.
+### Com Java, Spring, React e Typescript.
