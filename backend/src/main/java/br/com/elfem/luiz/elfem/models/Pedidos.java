@@ -145,6 +145,7 @@ public class Pedidos implements Serializable {
 
     private String ped_cpf_consumidor;
 
+
     public long getPed_codigo() {
         return ped_codigo;
     }

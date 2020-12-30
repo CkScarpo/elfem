@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,13 +18,20 @@ import br.com.elfem.luiz.elfem.repository.PedidosRepository;
 @RestController
 @RequestMapping(value = "/api")
 public class PedidosResource {
-    
+
     @Autowired
     PedidosRepository pedidosRepository;
 
+
     @GetMapping("/pedidos")
     public List<Pedidos> listPedidos() {
+
         return pedidosRepository.findAll();
+    }
+
+    @GetMapping("/pedidos/{id}")
+    public Pedidos listPedidosUnic(@PathVariable(value = "id") long id) {
+        return pedidosRepository.findById(id);
     }
 
     @PostMapping("/pedidos")
