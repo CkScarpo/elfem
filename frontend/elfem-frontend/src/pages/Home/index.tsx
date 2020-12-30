@@ -1,9 +1,11 @@
 import React, { useState, useEffect }  from 'react';
-import { useHistory } from 'react-router-dom'
+import { Table } from 'react-bootstrap';
 
 import {Bar} from 'react-chartjs-2';
 
 import api from '../../service/api';
+
+import './index.css'
 
 interface IPedidos {
   ped_codigo: number;
@@ -76,16 +78,14 @@ interface IPedidos {
 
 
 const state = {
-    labels: ['Faturamento', 'Custos/Impostos', 'Lucro Bruto' ],
-    datasets: [
+    labels: ['Faturamento', 'Custos/Impostos', 'Lucro Bruto', '' ],
+    datasets: [ 
       {
-        label: 'Rainfall',
-        backgroundColor: 'rgba(75,192,192,1)',
+        label: 'Resultado',
+        backgroundColor: 'rgba(65,105,225)',
         borderColor: 'rgba(0,0,0,1)',
         borderWidth: 2,
-        data: [
-          "faturamento"
-        ]
+        data: [ 10000, 7000, 3000, 0 ]
       }
     ]
   }
@@ -93,7 +93,6 @@ const state = {
 const Home: React.FC = () => {
   
   const [pedidos, setPedidos] = useState<IPedidos[]>([])
-  const history = useHistory()
 
   useEffect(() => {
     loadPedidos()
@@ -107,34 +106,88 @@ const Home: React.FC = () => {
 
   }
   
-  const apis = api.get('/pedidos');
-  let faturamento;
-  for (let i = 0; i < 420; i++) {
-
-    faturamento =+ apis;
-  }
-  console.log(faturamento);
-
-
 
     return (
-        <div>
+        
+      <div className="container">
+      
+      <div className="control-header">
+        <h6>Resultado Comparativo</h6>
+      </div>
+      <div className="table">
+      
+      
+        <Table striped bordered hover className="text-center">
+          <thead>
+            <tr className="table-dark">  
+              <th className="text-dark"></th>
+              <th className="text-dark">Mês Anterior</th>
+              <th className="text-dark">Mês Atual</th>
+              <th className="text-dark">Variação</th>
+            </tr>
+            <tr>
+              <td>faturamento</td>
+              <td>100.000,00</td>
+              <td>116.000,00</td>
+              <td className="text-info">16%</td>
+            </tr>
+            <tr>
+              <td>Impostos</td>
+              <td>9.700,00</td>
+              <td>11.252,00</td>
+              <td className="text-info">16%</td>
+            </tr>
+            <tr>
+              <td>Custos</td>
+              <td>41.000,00</td>
+              <td>47.000,00</td>
+              <td className="text-info">15%</td>
+            </tr>
+            <tr>
+              <td>Funcionarios</td>
+              <td>12.000,00</td>
+              <td>11.500,00</td>
+              <td className="text-danger"> -4% </td>
+            </tr>
+            <tr>
+              <td>Desp. Diversas</td>
+              <td>15.000,00</td>
+              <td>17.000,00</td>
+              <td className="text-info">13%</td>
+            </tr>
+            <tr>
+              <td>Lucro</td>
+              <td>22.300,00</td>
+              <td>29.248,00</td>
+              <td className="text-info">31%</td>
+            </tr>
+          </thead>
+        </Table>
+
+      <br/><br/>
+      
+      </div>
+      <div className="bar">
         <Bar
             data={state}
             options={{
-            title:{
-                display:true,
-                text:'Average Rainfall per month',
-                fontSize:20
-            },
-            legend:{
-                display:true,
-                position:'right'
-            }
+              title:{
+                  display:true,
+                  text:'Resultado do dia',
+                  fontSize:20
+              },
+              legend:{
+                  display:false,
+                  position:'right'
+              }
             }}
         />
-        </div>
-    );
-}
+      </div>
+
+      </div>
+        
+    )
+}   
+          
 
 export default Home;
